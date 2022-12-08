@@ -6,7 +6,18 @@
 - composition: refactor using composition pattern
 - reusable: refactor to not limited to User class
 
-### Requirements diagrams
+### Structure
+- Model Classes:(`/src/models/`)
+    - Handle data;
+    - Represent Users;
+    - Blog Posts;
+    - Images,
+    - etc.
+- View Classes:
+    - Handle HTML;
+    - Handle Events;
+    - 
+### Requirements
 - General Requirements:
     - need to create a class to represent a User and its data, name and age;
     - User class needs to have the ability to store some data, retrieve it and change it;
@@ -16,26 +27,30 @@
     - build class User as a 'mega' class with tons of methods
     - refactor User to use composition
     - refactor User to be a reusable class that can represent any piece of data, not just User
-### Structures
-- Model Classes:
-  - Handle data;
-  - Represent Users;
-  - Blog Posts;
-  - Images,
-  - etc.
-- View Classes:
-  - Handle HTML;
-  - Handle Events;
 
 
-
-### Class diagram
+#### Mega-User Class diagram
 ```mermaid
    classDiagram
-   class User {
+   class MegaUser {
+   -data: UserProps
+   +get(propName:string):(string|number)
+   +setName(update:UserProps):(void)
+   +on(eventName: string, callback:)
+   +trigger(eventName:string):(void)
+   +fetch():(Promise)
+   +save()(Promise)
+   }
+   class UserProps {
+   <<interface>>
    +name: string
    +age: number
-   +setName(string)
-   +setRandomAge()
    }
+   MegaUser *-- UserProps: composition
 ```
+
+
+
+
+#### Note:
+*Parcel bundler require `type="module"` added into the script tag at `index.html`*
