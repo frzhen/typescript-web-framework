@@ -5,7 +5,9 @@
  */
 import { User } from "./models/User";
 
-const user = new User({name:'Fred', age:45});
-console.log(user.get('name'));
-console.log(user.get('age'));
-
+const user = new User({});
+console.log(`${user.get('name')}, ${user.get('age')}`);
+user.set({name:'Fred', age:45});
+console.log(`${user.get('name')}, ${user.get('age')}`);
+user.set({ name: 'Francisco' });
+console.log(`${user.get('name')}, ${user.get('age')}`);

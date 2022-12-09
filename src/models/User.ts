@@ -11,4 +11,9 @@ export class User {
   get(propName: string): (string | number) {
     return this.data[propName];
   }
+
+  set(update: UserProps): void {
+    // @ts-ignore
+    Object.assign(this.data, update);
+  }
 }
