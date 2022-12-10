@@ -1,22 +1,39 @@
 ## Web Framework with TypeScript
 
+### Execution:
+- run on browser: `npm run web`
+- run on terminal only: `npm run dev`
 ### Installation
-- Method 1: Parcel bundler
+- run on browser: Parcel bundler
   - install parcel2 with npm at global level `npm install parcel -g`
   - Run project to browser: `parcel -p <port_number> index.html`
   - install local backend server JSON server: `npm install --save-dev json-server`
+    - create `db.json` in root directory:
+    ```json
+    {
+        "users": []
+    }
+    ```
+    - run json server at a different terminal window at root directory:
+      - `json-server -w db.json`
   - Now you can check your project in browser
-- Method 2: npm 
+- run on terminal: 
   - initialize npm project: `npm init`, and package.json created at root directory.
   - initialize typescript compiler: `tsc --init`, tsconfig.json template created in root directory.
   - modify the `rootDirs` and `outDir` in `tsconfig.json`:
     - `rootDirs`: [",/src""]
     - `outDir`: "./build"
-  - install necessary dependencies:
+  - <a name="dependencies"></a>install necessary dependencies:
     - install node typescript support: `npm i --save-dev @types/node`
     - install nodemon: `npm i --save-dev nodemon`
     - install concurrently: `npm i --save-dev concurrently`
+    - install axios: `npm i --save-dev axios`
   - install local backend server JSON server: `npm i --save-dev json-server`
+  - default port is 3000, you can allocate a different port by using `-p <port_number>`
+  - in browser, got to `http://localhost:3000` to check documentation
+  - in browser, got to `http://localhost:3000/users` for resource
+#### Note:
+*Parcel bundler require `type="module"` added into the script tag at `index.html`*
 
 ### Git branches:
 - main: latest
@@ -82,5 +99,4 @@
 
 
 
-#### Note:
-*Parcel bundler require `type="module"` added into the script tag at `index.html`*
+

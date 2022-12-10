@@ -6,7 +6,11 @@
   "scripts": {
     "dev:build": "tsc -w",
     "dev:run": "nodemon build/index.js",
-    "start": "concurrently npm:dev:*",
+    "dev:db": "json-server -w -p 3001 db.json",
+    "dev": "concurrently npm:dev:*",
+    "web:db": "json-server -w -p 3002 db.json",
+    "web:parcel": "parcel -p 7777 index.html",
+    "web": "concurrently npm:web:*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +29,7 @@
   "homepage": "https://github.com/frzhen/typescript-web-framework#readme",
   "devDependencies": {
     "@types/node": "^18.11.12",
+    "axios": "^1.2.1",
     "concurrently": "^7.6.0",
     "json-server": "^0.17.1",
     "nodemon": "^2.0.20"
