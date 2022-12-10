@@ -1,0 +1,32 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "a custom web framework in typescript",
+  "main": "index.js",
+  "scripts": {
+    "dev:build": "tsc -w",
+    "dev:run": "nodemon build/index.js",
+    "start": "concurrently npm:dev:*",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frzhen/typescript-web-framework.git"
+  },
+  "keywords": [
+    "web",
+    "framework"
+  ],
+  "author": "Fred Zhen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frzhen/typescript-web-framework/issues"
+  },
+  "homepage": "https://github.com/frzhen/typescript-web-framework#readme",
+  "devDependencies": {
+    "@types/node": "^18.11.12",
+    "concurrently": "^7.6.0",
+    "json-server": "^0.17.1",
+    "nodemon": "^2.0.20"
+  }
+}
