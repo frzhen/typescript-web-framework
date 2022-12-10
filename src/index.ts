@@ -3,25 +3,8 @@
  * @Date: 2022/12/8 23:12
  * @Email: fred.zhen@gmail.com
  */
-import { User } from "./models/User";
+import axios from 'axios'
 
-const user = new User({});
-
-// console.log(`${user.get('name')}, ${user.get('age')}`);
-user.set({name:'Fred', age:45});
-// console.log(`${user.get('name')}, ${user.get('age')}`);
-// user.set({ name: 'Francisco' });
-// console.log(`${user.get('name')}, ${user.get('age')}`);
-
-user.on("change", () => {
-  console.log("change #1");
-});
-user.on("change", () => {
-  console.log("change #2");
-});
-user.on('click', () => {
-  console.log("click, click");
-});
-user.trigger("change");
-user.trigger("click");
-console.log(user);
+const post_query = { name: 'Fred Zhen', age: 45}
+axios.post('http://localhost:3001/users', post_query)
+  .then(response => console.log(`${response.status}: ${response.statusText}`));

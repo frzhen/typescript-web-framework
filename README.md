@@ -37,7 +37,8 @@
 
 ### Git branches:
 - main: latest
-- mega-user: one class with all the methods
+- mega-user: one class with all the methods:
+    - mega-user-JSON-server: this is where we added on JSON server and use axios to persist data in db.json.
 - composition: refactor using composition pattern
 - reusable: refactor to not limited to User class
 

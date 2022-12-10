@@ -4,8 +4,10 @@
  * @Email: fred.zhen@gmail.com
  */
 import { UserProps, Callback, Events } from "../datatypes";
+import axios, { AxiosResponse } from "axios";
 
 export class User {
+  private server_url: string = "http://localhost:3001/users/"
   events: Events = {};
   constructor(private data: UserProps) {}
 
@@ -43,5 +45,14 @@ export class User {
     handlers.forEach(callback => {
       callback();
     })
+  }
+
+  fetch(): void {
+    const url: string = this.server_url + `${this.get('id')}`
+    console.log(url);
+    axios.get(url)
+      .then((response: AxiosResponse): void => {
+        this.set(response.data);
+      });
   }
 }

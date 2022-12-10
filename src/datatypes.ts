@@ -4,6 +4,7 @@
  * @Email: fred.zhen@gmail.com
  */
 export interface UserProps {
+  id?: number;
   name?: string;
   age?: number;
 }
