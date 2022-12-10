@@ -46,7 +46,18 @@
    +name: string
    +age: number
    }
-   MegaUser *-- UserProps: composition
+   MegaUser *-- UserProps: Composition
+   class Callback {
+   <<Type>>
+   +empty_callback_function()
+   }
+   MegaUser <.. Callback: Association
+   class Events {
+   <<Type>>
+   +keys_of_string_and_list_of_callback_functions
+   }
+   Events <|-- Callback: Composition
+   MegaUser <.. Events: Association
 ```
 
 
