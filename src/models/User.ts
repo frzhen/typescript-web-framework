@@ -48,11 +48,25 @@ export class User {
   }
 
   fetch(): void {
-    const url: string = this.server_url + `${this.get('id')}`
+    const url: string =  `${this.server_url}${this.get('id')}`
     console.log(url);
     axios.get(url)
       .then((response: AxiosResponse): void => {
         this.set(response.data);
       });
+  }
+
+  save(): void {
+    if (this.get('id')) {
+      axios.put(`${this.server_url}${this.get('id')}`, this.data)
+        .then((response:AxiosResponse) => {
+          console.log(`${response.status}: ${response.statusText}`);
+        });
+    } else {
+      axios.post(this.server_url, this.data)
+        .then((response:AxiosResponse) => {
+          console.log(`${response.status}: ${response.statusText}`);
+        });
+    }
   }
 }
