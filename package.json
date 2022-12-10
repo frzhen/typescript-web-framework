@@ -4,8 +4,9 @@
   "description": "a custom web framework in typescript",
   "main": "index.js",
   "scripts": {
-    "dev:build": "tsc -w",
-    "dev:run": "nodemon build/index.js",
+    "build": "tsc",
+    "execute": "nodemon build/index.js",
+    "dev:seq": "tsc && nodemon build/index.js",
     "dev:db": "json-server -w -p 3001 db.json",
     "dev": "concurrently npm:dev:*",
     "web:db": "json-server -w -p 3002 db.json",

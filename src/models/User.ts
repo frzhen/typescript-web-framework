@@ -10,6 +10,7 @@ export class User {
   constructor(private data: UserProps) {}
 
   get(propName: string): (string | number) {
+    // @ts-ignore
     return this.data[propName];
   }
 
