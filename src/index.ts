@@ -5,6 +5,16 @@
  */
 import { User } from './models/User';
 
-const user = new User({ name: "Fred", age: 45});
+const user = new User({ name: "Anna", age: 40});
 
-user.save();
+user.events.on('change', () => {
+  console.log('change');
+});
+user.events.on('click', () => {
+  console.log('click');
+});
+user.events.on('change', () => {
+  console.log('change again');
+});
+user.events.trigger('change');
+console.log(user);

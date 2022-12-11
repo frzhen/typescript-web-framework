@@ -39,7 +39,7 @@
 - main: latest
 - mega-user: one class with all the methods:
     - mega-user-JSON-server: this is where we added on JSON server and use axios to persist data in db.json.
-- composition: refactor using composition pattern
+- composition-refactor: refactor using composition pattern
 - reusable: refactor to not limited to User class
 
 
@@ -72,7 +72,8 @@
    class MegaUser {
    -data: UserProps
    +get(propName:string):(string|number)
-   +setName(update:UserProps):(void)
+   +set(update:UserProps):(void)
+   -getEventMethods(eventName: string): (Callback[])
    +on(eventName: string, callback:)
    +trigger(eventName:string):(void)
    +fetch():(Promise)
@@ -96,7 +97,42 @@
    Events <|-- Callback: Composition
    MegaUser <.. Events: Association
 ```
-
+#### Composition Class Diagram
+```mermaid
+   classDiagram
+   class User {
+   +events: Eventing
+   -data: UserProps
+   +get(propName:string):(string|number)
+   +set(update:UserProps):(void)
+   +fetch():(Promise)
+   +save()(Promise)
+   }
+   class UserProps {
+   <<interface>>
+   +name: string
+   +age: number
+   }
+   User *-- UserProps: Composition
+   class Callback {
+   <<Type>>
+   +empty_callback_function()
+   }
+   User <.. Callback: Association
+   User *-- Eventing: Composition
+   class Events {
+   <<Type>>
+   +keys_of_string_and_list_of_callback_functions
+   }
+   Eventing <|-- Callback: Composition
+   Eventing <.. Events: Association
+    class Eventing {
+   -event_dict: Events
+   -getEventMethods(eventName: string): (Callback[])
+   +on(eventName: string, callback:)
+   +trigger(eventName:string):(void)
+   }
+```
 
 
 
