@@ -6,28 +6,33 @@
 import { UserProps } from "../datatypes";
 import { Eventing } from "./Eventing";
 import { Sync } from "./Sync";
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
+import { Attributes } from "./Attributes";
 
 
 const rootUrl: string = "http://localhost:3001/users/";
-export class User {
+export class User{
+  public attributes: Attributes<UserProps>;
   public events: Eventing = new Eventing();
   public sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
 
-  constructor(private data: UserProps) {}
-
-  get(propName: string): (string | number) {
-    // @ts-ignore
-    return this.data[propName];
+  constructor(attrs: UserProps) {
+    this.attributes = new Attributes<UserProps>(attrs);
   }
 
-  set(update: UserProps): void {
-    // @ts-ignore
-    Object.assign(this.data, update);
+  get get(){
+    return this.attributes.get;
   }
 
+  get on() {
+    return this.events.on;
+  }
+
+  get trigger() {
+    return this.events.trigger;
+  }
   fetch(): void {
-    const id: number | undefined = this.data.id;
+    const id: number | undefined = this.attributes.get('id');
     if (id){
       this.sync.fetch(id).then((response: AxiosResponse) => {
         console.log(response.data);
@@ -37,10 +42,5 @@ export class User {
     }
   }
 
-  save():void {
-    this.sync.save(this.data).then((response: AxiosResponse) => {
-      console.log(response.status)
-    })
-  }
 
 }
