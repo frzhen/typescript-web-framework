@@ -4,10 +4,11 @@
  * @Email: fred.zhen@gmail.com
  */
 import { Model } from "./Model";
-import {UserProps} from "../datatypes";
+import { UserProps } from "../datatypes";
 import { Attributes } from "./Attributes";
 import { Eventing } from "./Eventing";
-import {ApiSync} from "./ApiSync";
+import { ApiSync } from "./ApiSync";
+
 
 
 const rootUrl: string = "http://localhost:3001/users/";

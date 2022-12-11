@@ -5,11 +5,16 @@
  */
 import { User } from './models/User';
 
-const user = new User({id:2,  name: "Anna", age: 4 });
+const user = User.build({id: 1});
 
-user.on('save', () => {
+user.on('change', ()=>{
   console.log(user);
-});
+})
 
-user.save();
+// user.on('save', () => {
+//   console.log(user);
+// });
+//
+// user.save();
 
+user.fetch();

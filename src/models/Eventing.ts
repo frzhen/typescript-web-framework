@@ -4,9 +4,8 @@
  * @Email: fred.zhen@gmail.com
  */
 import { Callback, EventList } from "../datatypes";
-import { Events } from "../interfaces/Events"
 
-export class Eventing implements Events{
+export class Eventing{
   private event_dict: EventList = {};
 
   private getEventMethods(eventName: string): Callback[] {

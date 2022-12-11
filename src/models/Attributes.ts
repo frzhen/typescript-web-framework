@@ -3,14 +3,11 @@
  * @Date: 2022/12/11 16:33
  * @Email: fred.zhen@gmail.com
  */
-import {ModelAttributes} from "../interfaces/ModelAttributes";
-
-export class Attributes<T> implements ModelAttributes<T>{
+export class Attributes<T extends Object> {
   constructor(private data: T) {}
 
   // arrow function or bound function resolved this issue
   get = <K extends keyof T>(key: K): T[K] => {
-    // @ts-ignore
     return this.data[key];
   }
 
@@ -19,7 +16,6 @@ export class Attributes<T> implements ModelAttributes<T>{
   }
 
   set = (update: T): void => {
-    // @ts-ignore
     Object.assign(this.data, update);
   }
 }
