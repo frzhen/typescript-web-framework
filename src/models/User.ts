@@ -25,7 +25,7 @@ export class User{
   }
   set(update: UserProps): void {
     this.attributes.set(update);
-    this.events.trigger('click')
+    this.events.trigger('change')
   }
 
   get on() {
@@ -36,14 +36,13 @@ export class User{
     return this.events.trigger;
   }
   fetch(): void {
-    const id: number | undefined = this.attributes.get('id');
-    if (id){
-      this.sync.fetch(id).then((response: AxiosResponse) => {
-        console.log(response.data);
-      })
-    } else {
-      console.log("This id doesn't exist");
+    const id = this.get('id');
+    if ( typeof id !== 'number') {
+      throw new Error('Cannot fetch without an id');
     }
+    this.sync.fetch(id).then((response: AxiosResponse): void => {
+        this.set(response.data);
+      });
   }
 
 

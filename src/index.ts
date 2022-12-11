@@ -5,11 +5,10 @@
  */
 import { User } from './models/User';
 
-const user = new User({ name: "Anna", age: 40});
+const user = new User({ id: 1 });
 
-user.on('click', () => {
-  console.log("click, click");
+user.on('change', () => {
+  console.log(user);
 });
-user.set({ name: "new name"});
-console.log(user.get('name'));
-console.log(user);
+
+user.fetch();
