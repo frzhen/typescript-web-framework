@@ -5,7 +5,7 @@
  */
 import {ModelAttributes} from "../interfaces/ModelAttributes";
 
-export class Attributes<T> implements ModelAttributes<T>{
+export class Attributes<T extends Object> implements ModelAttributes<T>{
   constructor(private data: T) {}
 
   // arrow function or bound function resolved this issue

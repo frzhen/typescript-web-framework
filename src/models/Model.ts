@@ -16,22 +16,17 @@ export class Model<T extends HasId> {
     private events: Events,
     private sync: Sync<T>
   ) {}
+  get = this.attributes.get;
 
-  get get(){
-    return this.attributes.get;
-  }
   set(update: T): void {
     this.attributes.set(update);
     this.events.triggerAll();
   }
 
-  get on() {
-    return this.events.on;
-  }
+  on = this.events.on;
 
-  get trigger() {
-    return this.events.trigger;
-  }
+  trigger = this.events.trigger;
+
   fetch(): void {
     const id = this.get('id');
     if ( typeof id !== 'number') {
