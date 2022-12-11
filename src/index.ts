@@ -7,9 +7,9 @@ import { User } from './models/User';
 
 const user = new User({ name: "Anna", age: 40});
 
-console.log(user.get('name'));
 user.on('click', () => {
   console.log("click, click");
 });
-user.trigger('click')
+user.set({ name: "new name"});
+console.log(user.get('name'));
 console.log(user);
