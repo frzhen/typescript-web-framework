@@ -7,7 +7,7 @@ import axios, { AxiosPromise } from "axios";
 import { HasId } from "../datatypes";
 
 export class Sync<T extends HasId> {
-  constructor(public rootUrl: string) {
+  constructor(private rootUrl: string) {
   }
 
   fetch= (id: number): AxiosPromise => {

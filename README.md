@@ -110,8 +110,9 @@
    }
    class UserProps {
    <<interface>>
-   +name: string
-   +age: number
+   +id?: number
+   +name?: string
+   +age?: number
    }
    User *-- UserProps: Composition
    class Callback {
@@ -124,14 +125,34 @@
    <<Type>>
    +keys_of_string_and_list_of_callback_functions
    }
-   Eventing <|-- Callback: Composition
+   Eventing <|-- Callback: Association
    Eventing <.. Events: Association
-    class Eventing {
+   class Eventing {
    -event_dict: Events
    -getEventMethods(eventName: string): (Callback[])
    +on(eventName: string, callback:)
    +trigger(eventName:string):(void)
    }
+   class Attributes{
+   <<Generic T>>
+   -data: T
+   +get[K extends keyof T](): (T[K])
+   +getAllAttributes();
+   +set(update):(void)
+   }
+   User <-- Attributes: Composition
+   class Sync{
+   <<Generic T extends HasId>>
+   -rootUrl: string
+   +fetch(id:number): (AxiosPromise)
+   +save(data:T): (AxiosPromise)
+   }
+   User <-- Sync: Composition
+   class HasId {
+   <<Type>>
+   id?: number
+   }
+   Sync <-- HasId: Association
 ```
 
 
