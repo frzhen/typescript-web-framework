@@ -48,9 +48,11 @@ export class User{
 
   save = (): void => {
     this.sync.save(this.attributes.getAllAttributes())
-      .then(() => {
-        console.log("Saved successfully");
-      });
+      .then((): void => {
+        this.trigger('save');
+      }).catch(()=>{
+        this.trigger('error');
+    });
   }
 
 }

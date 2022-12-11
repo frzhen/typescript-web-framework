@@ -5,12 +5,11 @@
  */
 import { User } from './models/User';
 
-const user = new User({ name: "Anna", age: 45 });
+const user = new User({id:2,  name: "Anna", age: 4 });
 
-user.on('change', () => {
-  console.log("first change");
+user.on('save', () => {
+  console.log(user);
 });
 
 user.save();
 
-console.log(user);
