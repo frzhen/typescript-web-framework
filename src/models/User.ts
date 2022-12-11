@@ -24,6 +24,7 @@ export class User{
     return this.attributes.get;
   }
 
+
   get on() {
     return this.events.on;
   }

@@ -7,12 +7,13 @@
 export class Attributes<T> {
   constructor(private data: T) {}
 
-  get<K extends keyof T>(key: K): T[K] {
+  // arrow function or bound function resolved this issue
+  get = <K extends keyof T>(key: K): T[K] => {
     // @ts-ignore
     return this.data[key];
   }
 
-  set(update: T): void {
+  set = (update: T): void => {
     // @ts-ignore
     Object.assign(this.data, update);
   }

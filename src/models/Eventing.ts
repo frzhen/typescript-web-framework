@@ -17,14 +17,14 @@ export class Eventing {
     }
   }
   // register event handler
-  on(eventName: string, callback: Callback): void {
+  on = (eventName: string, callback: Callback): void => {
     // retrieve event's callback list
     const handlers = this.getEventMethods(eventName);
     handlers.push(callback); // add on new callback to the event handler list
     this.event_dict[eventName] = handlers
   }
 
-  trigger(eventName: string): void {
+  trigger = (eventName: string): void => {
     const handlers = this.getEventMethods(eventName);
     if (!handlers || handlers.length === 0) {
       return;
