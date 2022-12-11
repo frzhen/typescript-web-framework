@@ -5,10 +5,20 @@
  */
 import { User } from './models/User';
 
-const user = new User({ id: 1 });
+const user = new User({ name: "Anna", age: 45 });
 
 user.on('change', () => {
-  console.log(user);
+  console.log("first change");
 });
 
-user.fetch();
+// user.on('change', () => {
+//   console.log("second change");
+// });
+//
+user.on('click', () => {
+  console.log("click, click");
+});
+
+
+user.set({ name: "someone new"});
+

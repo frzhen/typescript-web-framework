@@ -33,4 +33,10 @@ export class Eventing {
       callback();
     })
   }
+
+  triggerAll = (): void => {
+    Object.keys(this.event_dict).forEach((event_iter) => {
+      this.trigger(event_iter);
+    });
+  }
 }
