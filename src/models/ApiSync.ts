@@ -5,8 +5,9 @@
  */
 import axios, { AxiosPromise } from "axios";
 import { HasId } from "../datatypes";
+import {Sync} from "../interfaces/Sync";
 
-export class ApiSync<T extends HasId> {
+export class ApiSync<T extends HasId> implements Sync<T>{
   constructor(private rootUrl: string) {
   }
 

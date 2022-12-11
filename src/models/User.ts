@@ -11,7 +11,7 @@ import { ApiSync } from "./ApiSync";
 
 
 
-const rootUrl: string = "http://localhost:3001/users/";
+const rootUrl: string = "http://localhost:3001/users";
 export class User extends Model<UserProps> {
   static build(attrs: UserProps): User {
     return new User(
