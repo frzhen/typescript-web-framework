@@ -10,7 +10,7 @@ export interface UserProps {
 }
 export type Callback = () => void;
 
-export type Events = {[key: string]: Callback[]}
+export type EventList = {[key: string]: Callback[]}
 
 export interface HasId {
   id?: number;

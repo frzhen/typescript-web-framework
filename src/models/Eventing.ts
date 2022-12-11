@@ -3,11 +3,11 @@
  * @Date: 2022/12/11 10:07
  * @Email: fred.zhen@gmail.com
  */
-import { Callback, Events } from "../datatypes";
+import { Callback, EventList } from "../datatypes";
+import { Events } from "../interfaces/Events"
 
-
-export class Eventing {
-  private event_dict: Events = {};
+export class Eventing implements Events{
+  private event_dict: EventList = {};
 
   private getEventMethods(eventName: string): Callback[] {
     if (eventName in this.event_dict) {

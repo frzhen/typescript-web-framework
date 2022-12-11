@@ -40,7 +40,7 @@
 - mega-user: one class with all the methods:
     - mega-user-JSON-server: this is where we added on JSON server and use axios to persist data in db.json.
 - composition-refactor: refactor using composition pattern
-- reusable: refactor to not limited to User class
+- reusable-inheritance: refactor to not limited to User class
 
 
 ### Structure
@@ -155,6 +155,89 @@
    Sync <-- HasId: Association
 ```
 
-
+#### reusable-Inheritance
+```mermaid
+   classDiagram
+   class User {
+   +static_build(attrs:UserProps): (User)
+   }
+   class UserProps {
+   <<interface>>
+   +id?: number
+   +name?: string
+   +age?: number
+   }
+   User *-- UserProps: Type Constraint
+   class Callback {
+   <<Type>>
+   +empty_callback_function()
+   }
+   Model <-- User: Inheritance
+   class Model{
+   <<Generic T extends HasId>>
+   -attributes: ModelAttributes
+   -events: Events
+   -sync: Sync
+   +get()
+   +set()
+   +on()
+   +trigger()
+   +fetch()
+   +save()
+   }
+   class ModelAttributes{
+   <<Interface>>
+   +get(key:K): (T[K])
+   +set(update:T):(void)
+   +getAllAttributes():(T)
+   }
+   Model <-- ModelAttributes: Composition
+   ModelAttributes *-- Attributes: Association
+   class Events{
+   <<Interface>>
+   +on(eventName: string, callback: Callback):(void)
+   +trigger(eventName: string):(void)
+   +triggerAll():(void)
+   }
+   Model <-- Events: Composition
+   Events *-- Eventing: Association
+   class EventList {
+   <<Type>>
+   +keys_of_string_and_list_of_callback_functions
+   }
+   Events <|-- Callback: Type Constraint
+   Eventing <.. EventList: Type Constraint
+   class Eventing {
+   -event_dict: EventList
+   -getEventMethods(eventName: string): (Callback[])
+   +on(eventName: string, callback:)
+   +trigger(eventName:string):(void)
+   }
+   class Sync{
+   <<Interface>>
+   +fetch(id: number): (AxiosPromise)
+   +save(data: T): (AxiosPromise)
+   }
+   Model <-- Sync: Composition
+   Sync *-- ApiSync: Association
+   class Attributes{
+   <<Generic T>>
+   -data: T
+   +get[K extends keyof T](): (T[K])
+   +getAllAttributes();
+   +set(update):(void)
+   }
+   class ApiSync{
+   <<Generic T extends HasId>>
+   -rootUrl: string
+   +fetch(id:number): (AxiosPromise)
+   +save(data:T): (AxiosPromise)
+   }
+   class HasId {
+   <<Type>>
+   id?: number
+   }
+   ApiSync <-- HasId: Type Constraint
+```
 
 

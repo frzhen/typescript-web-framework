@@ -3,8 +3,9 @@
  * @Date: 2022/12/11 16:33
  * @Email: fred.zhen@gmail.com
  */
+import {ModelAttributes} from "../interfaces/ModelAttributes";
 
-export class Attributes<T> {
+export class Attributes<T> implements ModelAttributes<T>{
   constructor(private data: T) {}
 
   // arrow function or bound function resolved this issue
