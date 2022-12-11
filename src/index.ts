@@ -11,14 +11,6 @@ user.on('change', () => {
   console.log("first change");
 });
 
-// user.on('change', () => {
-//   console.log("second change");
-// });
-//
-user.on('click', () => {
-  console.log("click, click");
-});
+user.save();
 
-
-user.set({ name: "someone new"});
-
+console.log(user);

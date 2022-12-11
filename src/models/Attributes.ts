@@ -13,6 +13,10 @@ export class Attributes<T> {
     return this.data[key];
   }
 
+  getAllAttributes = (): T => {
+    return this.data;
+  }
+
   set = (update: T): void => {
     // @ts-ignore
     Object.assign(this.data, update);

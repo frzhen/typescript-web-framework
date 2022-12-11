@@ -35,15 +35,22 @@ export class User{
   get trigger() {
     return this.events.trigger;
   }
-  fetch(): void {
+  fetch = (): void => {
     const id = this.get('id');
     if ( typeof id !== 'number') {
       throw new Error('Cannot fetch without an id');
     }
-    this.sync.fetch(id).then((response: AxiosResponse): void => {
+    this.sync.fetch(id)
+      .then((response: AxiosResponse): void => {
         this.set(response.data);
       });
   }
 
+  save = (): void => {
+    this.sync.save(this.attributes.getAllAttributes())
+      .then(() => {
+        console.log("Saved successfully");
+      });
+  }
 
 }
