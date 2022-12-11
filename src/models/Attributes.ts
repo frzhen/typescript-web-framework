@@ -5,7 +5,7 @@
  */
 import {ModelAttributes} from "../interfaces/ModelAttributes";
 
-export class Attributes<T extends Object> implements ModelAttributes<T>{
+export class Attributes<T> implements ModelAttributes<T>{
   constructor(private data: T) {}
 
   // arrow function or bound function resolved this issue
@@ -13,11 +13,11 @@ export class Attributes<T extends Object> implements ModelAttributes<T>{
     return this.data[key];
   }
 
-  getAllAttributes = (): T => {
+  getAllAttributes(): T {
     return this.data;
   }
 
-  set = (update: T): void => {
+  set(update: T): void {
     Object.assign(this.data, update);
   }
 }

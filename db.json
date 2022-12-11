@@ -2,13 +2,13 @@
   "users": [
     {
       "id": 1,
-      "name": "John Moses",
-      "age": 38
-    },
-    {
-      "id": 2,
       "name": "Anna",
       "age": 4
+    },
+    {
+      "name": "Fred",
+      "age": 45,
+      "id": 2
     }
   ]
 }

@@ -18,3 +18,7 @@ user.on('change', ()=>{
 // user.save();
 
 user.fetch();
+console.log(user.isAdminUser());
+
+// const user2 = User.build({name:"Fred", age: 45});
+// user2.save();
