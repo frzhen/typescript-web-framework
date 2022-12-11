@@ -4,12 +4,15 @@
  * @Email: fred.zhen@gmail.com
  */
 import { UserProps } from "../datatypes";
-import axios, { AxiosResponse } from "axios";
 import { Eventing } from "./Eventing";
+import { Sync } from "./Sync";
+import {AxiosResponse} from "axios";
 
+
+const rootUrl: string = "http://localhost:3001/users/";
 export class User {
   public events: Eventing = new Eventing();
-  private server_url: string = "http://localhost:3001/users/"
+  public sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
 
   constructor(private data: UserProps) {}
 
@@ -24,25 +27,20 @@ export class User {
   }
 
   fetch(): void {
-    const url: string =  `${this.server_url}${this.get('id')}`
-    console.log(url);
-    axios.get(url)
-      .then((response: AxiosResponse): void => {
-        this.set(response.data);
-      });
-  }
-
-  save(): void {
-    if (this.get('id')) {
-      axios.put(`${this.server_url}${this.get('id')}`, this.data)
-        .then((response:AxiosResponse) => {
-          console.log(`${response.status}: ${response.statusText}`);
-        });
+    const id: number | undefined = this.data.id;
+    if (id){
+      this.sync.fetch(id).then((response: AxiosResponse) => {
+        console.log(response.data);
+      })
     } else {
-      axios.post(this.server_url, this.data)
-        .then((response:AxiosResponse) => {
-          console.log(`${response.status}: ${response.statusText}`);
-        });
+      console.log("This id doesn't exist");
     }
   }
+
+  save():void {
+    this.sync.save(this.data).then((response: AxiosResponse) => {
+      console.log(response.status)
+    })
+  }
+
 }
