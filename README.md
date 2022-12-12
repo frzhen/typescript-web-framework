@@ -39,7 +39,8 @@
     - mega-user-JSON-server: this is where we added on JSON server and use axios to persist data in db.json.
 - composition-refactor: refactor using composition pattern
 - reusable-inheritance: refactor to not limited to User class
-- views: (where we insert the view classes)
+- view: (where we insert the view classes)
+- view-reusable
 
 
 ### Structure
@@ -256,7 +257,28 @@
    ApiSync *-- HasId: Type Constraint
 ```
 
-#### views (no usability):
+#### view (no usability):
+```mermaid
+   classDiagram
+   class UserForm{
+   +parent: Element
+   +model: User
+   +reactivity(): (void)
+   +eventsMap(): (EventMapObject)
+   +template(): string
+   +render(): (void)
+   +onSetNameClick():(void)
+   +onSetAgeClick():(void)
+   +onSaveClick():(void)
+   }
+   class EventMapObject {
+   <<Type>>
+   +key_of_string_and_function
+   }
+   UserForm *-- EventMapObject: Type Constraint
+```
+
+#### view-reusable:
 ```mermaid
    classDiagram
    class UserForm{
