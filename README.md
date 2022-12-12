@@ -96,7 +96,7 @@
    Events <|-- Callback: Composition
    MegaUser <.. Events: Association
 ```
-#### Composition Class Diagram
+#### Composition Class Diagram:
 ```mermaid
    classDiagram
    class User {
@@ -154,7 +154,7 @@
    Sync <-- HasId: Association
 ```
 
-#### reusable-Inheritance
+#### reusable-Inheritance:
 ```mermaid
    classDiagram
    class Collection{
@@ -175,6 +175,7 @@
    +attrs: UserProps
    +static_build(attrs:UserProps): (User)
    +static_buildCollection()
+   +setRandomAge():(void)
    }
    class UserProps {
    <<interface>>
@@ -255,15 +256,19 @@
    ApiSync *-- HasId: Type Constraint
 ```
 
-#### views
+#### views (no usability):
 ```mermaid
    classDiagram
    class UserForm{
    +parent: Element
+   +model: User
+   +reactivity(): (void)
    +eventsMap(): (EventMapObject)
    +template(): string
    +render(): (void)
-   +onButtonClick():(void)
+   +onSetNameClick():(void)
+   +onSetAgeClick():(void)
+   +onSaveClick():(void)
    }
    class EventMapObject {
    <<Type>>

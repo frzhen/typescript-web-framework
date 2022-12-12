@@ -9,9 +9,16 @@ import { User } from "./models/User";
 
 const user = User.build({ name: 'Name', age: 20})
 
-const userForm = new UserForm(
-  document.getElementById('root'),
-  user
-);
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  const userForm = new UserForm(
+    rootElement,
+    user
+  );
+  userForm.render();
+} else {
+  throw new Error("The root element is not present!");
+}
 
-userForm.render();
+
+
