@@ -21,7 +21,8 @@ export class UserForm {
   eventsMap(): EventMapObject {
     return {
       'click:.set-age': this.onSetAgeClick,
-      'click:#update-name': this.onUpdateNameClick
+      'click:#set-name': this.onSetNameClick,
+      'click:#save-user': this.onSaveClick
 
     };
   }
@@ -29,8 +30,14 @@ export class UserForm {
   onSetAgeClick = (): void => {
     this.model.setRandomAge();
   }
-  onUpdateNameClick(): void {
-    console.log('Hi, Update name');
+  onSetNameClick = (): void => {
+    const input = this.parent.querySelector('input');
+    // @ts-ignore
+    const name = input.value;
+    this.model.set({name: name});
+  }
+  onSaveClick = (): void => {
+    this.model.save();
   }
   template(): string {
     return `
@@ -47,12 +54,13 @@ export class UserForm {
         <div class="card-footer">
           <div class="card-footer-item">
              <input class="input" />
-          </div>
-          <div class="card-footer-item">
-            <button id="update-name" class=" button is-primary">Update Name</button>
+             <button id="set-name" class="button is-primary ml-2">Set Name</button>
           </div>
           <div class="card-footer-item">
            <button class="set-age button is-info">Set Random Age</button>
+          </div>
+           <div class="card-footer-item">
+            <button id="save-user" class="button is-danger">Save</button>
           </div>
         </div>
       </div>
