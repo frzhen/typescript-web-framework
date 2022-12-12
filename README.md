@@ -260,7 +260,14 @@
    classDiagram
    class UserForm{
    +parent: Element
+   +eventsMap(): (EventMapObject)
    +template(): string
    +render(): (void)
+   +onButtonClick():(void)
    }
+   class EventMapObject {
+   <<Type>>
+   +key_of_string_and_function
+   }
+   UserForm *-- EventMapObject: Type Constraint
 ```
