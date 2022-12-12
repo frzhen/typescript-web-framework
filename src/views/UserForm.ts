@@ -4,11 +4,12 @@
  * @Email: fred.zhen@gmail.com
  */
 import { EventMapObject } from "../datatypes";
+import { User } from "../models/User";
 
 
 export class UserForm {
 
-  constructor(public parent: Element) {}
+  constructor(public parent: Element, public model: User) {}
 
   eventsMap(): EventMapObject {
     return {
@@ -25,18 +26,27 @@ export class UserForm {
   }
   template(): string {
     return `
-      <div>
-        <h1 class="is-size-1 mb-4">User Form</h1>
-        <div class="columns">
-          <div class="column is-two-thirds">
-            <input class="input" />
-          </div>
-          <div class="column">
-            <button class="button is-primary">Click Me</button>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-title is-justify-content-center">
+             <h1 class="is-size-1 has-text-weight-bold mb-4">User Form</h1>
           </div>
         </div>
-        
-        
+        <div class="card-content">
+        <p class="is-size-3">User Name: ${this.model.get('name')}</p>
+        <p class="is-size-3">User Age: ${this.model.get('age')}</p>
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-item">
+             <input class="input" />
+          </div>
+          <div class="card-footer-item">
+            <button class="button is-primary">Update Name</button>
+          </div>
+          <div class="card-footer-item">
+           <button class="button is-info">Random Age</button>
+          </div>
+        </div>
       </div>
     `;
   }
