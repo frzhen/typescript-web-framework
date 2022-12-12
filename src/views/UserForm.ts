@@ -3,21 +3,13 @@
  * @Date: 2022/12/12 14:36
  * @Email: fred.zhen@gmail.com
  */
-import { EventMapObject } from "../datatypes";
+import { EventMapObject, UserProps } from "../datatypes";
 import { User } from "../models/User";
+import { View } from "./View";
 
 
-export class UserForm {
+export class UserForm extends View<User, UserProps> {
 
-  constructor(public parent: Element, public model: User) {
-    this.reactivity()
-  }
-
-  reactivity(): void {
-    this.model.on('change', () => {
-    this.render();
-    });
-  }
   eventsMap(): EventMapObject {
     return {
       'click:.set-age': this.onSetAgeClick,
@@ -69,24 +61,5 @@ export class UserForm {
         </div>
       </div>
     `;
-  }
-
-  bindEvents(fragment: DocumentFragment): void {
-    const eventsMap = this.eventsMap();
-    for (let eventKey in eventsMap) {
-      const [eventName, selector] = eventKey.split(':');
-      fragment.querySelectorAll(selector).forEach(element => {
-        element.addEventListener(eventName, eventsMap[eventKey]);
-      })
-    }
-  }
-  render(): void {
-    // Empty out page
-    this.parent.innerHTML = '';
-    // render or re-render the page
-    const templateElement = document.createElement('template');
-    templateElement.innerHTML = this.template();
-    this.bindEvents(templateElement.content);
-    this.parent.append(templateElement.content);
   }
 }

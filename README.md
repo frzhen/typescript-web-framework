@@ -71,13 +71,13 @@
    classDiagram
    class MegaUser {
    -data: UserProps
-   +get(propName:string):(string|number)
-   +set(update:UserProps):(void)
-   -getEventMethods(eventName: string): (Callback[])
-   +on(eventName: string, callback:)
-   +trigger(eventName:string):(void)
-   +fetch():(Promise)
-   +save()(Promise)
+   +get(propName:string) string|number
+   +set(update:UserProps) void
+   -getEventMethods(eventName: string) Callback[]
+   +on(eventName: string, callback:) void
+   +trigger(eventName:string) void
+   +fetch() Promise
+   +save() Promise
    }
    class UserProps {
    <<interface>>
@@ -97,86 +97,29 @@
    Events <|-- Callback: Composition
    MegaUser <.. Events: Association
 ```
-#### Composition Class Diagram:
-```mermaid
-   classDiagram
-   class User {
-   +events: Eventing
-   -data: UserProps
-   +get(propName:string):(string|number)
-   +set(update:UserProps):(void)
-   +fetch():(Promise)
-   +save()(Promise)
-   }
-   class UserProps {
-   <<interface>>
-   +id?: number
-   +name?: string
-   +age?: number
-   }
-   User *-- UserProps: Composition
-   class Callback {
-   <<Type>>
-   +empty_callback_function()
-   }
-   User <.. Callback: Association
-   User *-- Eventing: Composition
-   class Events {
-   <<Type>>
-   +keys_of_string_and_list_of_callback_functions
-   }
-   Eventing <|-- Callback: Association
-   Eventing <.. Events: Association
-   class Eventing {
-   -event_dict: Events
-   -getEventMethods(eventName: string): (Callback[])
-   +on(eventName: string, callback:)
-   +trigger(eventName:string):(void)
-   }
-   class Attributes{
-   <<Generic T>>
-   -data: T
-   +get[K extends keyof T](): (T[K])
-   +getAllAttributes();
-   +set(update):(void)
-   }
-   User <-- Attributes: Composition
-   class Sync{
-   <<Generic T extends HasId>>
-   -rootUrl: string
-   +fetch(id:number): (AxiosPromise)
-   +save(data:T): (AxiosPromise)
-   }
-   User <-- Sync: Composition
-   class HasId {
-   <<Type>>
-   id?: number
-   }
-   Sync <-- HasId: Association
-```
 
-#### reusable-Inheritance:
+#### reusable-Inheritance: (including Composition)
 ```mermaid
    classDiagram
-   class Collection{
-   <<Generic T, K>>
+   class Collection~T, K~{
+   <<Generic>>
    +models: T[]
    +events: Eventing
    +rootUrl: string
    +deserialize: (json: K)
    +on()
    +trigger()
-   +fetch()
+   +fetch() void
    }
    Collection <-- Eventing: Composition
-   Collection <|.. User: as Generic Parameter
+   Collection <|.. User: Generic Parameter
    User o-- Collection: Aggregation
    class User {
    <<extends Model>>
    +attrs: UserProps
-   +static_build(attrs:UserProps): (User)
-   +static_buildCollection()
-   +setRandomAge():(void)
+   +build(attrs:UserProps)$ User
+   +buildCollection()$ Collection
+   +setRandomAge() void
    }
    class UserProps {
    <<interface>>
@@ -184,14 +127,14 @@
    +name?: string
    +age?: number
    }
-   User *-- UserProps: Type Constraint
+   User *.. UserProps: Type Constraint
    class Callback {
    <<Type>>
    +empty_callback_function()
    }
    Model <|-- User: Inheritance
-   class Model{
-   <<Generic T extends HasId>>
+   class Model~T extends HasId~{
+   <<Generic>>
    -attributes: ModelAttributes
    -events: Events
    -sync: Sync
@@ -204,17 +147,17 @@
    }
    class ModelAttributes{
    <<Interface>>
-   +get(key:K): (T[K])
-   +set(update:T):(void)
-   +getAllAttributes():(T)
+   +get[K extends keyof T](key: K) T[K]
+   +set(update:T) void
+   +getAllAttributes() T
    }
    Model <-- ModelAttributes: Composition
    ModelAttributes <.. Attributes: Association
    class Events{
    <<Interface>>
-   +on(eventName: string, callback: Callback):(void)
-   +trigger(eventName: string):(void)
-   +triggerAll():(void)
+   +on(eventName: string, callback: Callback) void
+   +trigger(eventName: string) void
+   +triggerAll() void
    }
    Model <-- Events: Composition
    Events <.. Eventing: Association
@@ -222,30 +165,30 @@
    <<Type>>
    +keys_of_string_and_list_of_callback_functions
    }
-   Events *-- Callback: Type Constraint
-   Eventing *-- EventList: Type Constraint
+   Events *.. Callback: Type Constraint
+   Eventing *.. EventList: Type Constraint
    class Eventing {
    -event_dict: EventList
-   -getEventMethods(eventName: string): (Callback[])
-   +on(eventName: string, callback:)
-   +trigger(eventName:string):(void)
+   -getEventMethods(eventName: string) Callback[]
+   +on(eventName: string, callback:) void
+   +trigger(eventName:string) void
    }
    class Sync{
    <<Interface>>
-   +fetch(id: number): (AxiosPromise)
-   +save(data: T): (AxiosPromise)
+   +fetch(id: number) AxiosPromise
+   +save(data: T) AxiosPromise
    }
    Model <-- Sync: Composition
    Sync <.. ApiSync: Association
-   class Attributes{
-   <<Generic T>>
+   class Attributes~T~{
+   <<Generic>>
    -data: T
-   +get[K extends keyof T](): (T[K])
+   +get[K extends keyof T]() T[K]
    +getAllAttributes();
-   +set(update):(void)
+   +set(update) void
    }
-   class ApiSync{
-   <<Generic T extends HasId>>
+   class ApiSync~T extends HasId~{
+   <<Generic>>
    -rootUrl: string
    +fetch(id:number): (AxiosPromise)
    +save(data:T): (AxiosPromise)
@@ -254,47 +197,33 @@
    <<Type>>
    id?: number
    }
-   ApiSync *-- HasId: Type Constraint
-```
-
-#### view (no usability):
-```mermaid
-   classDiagram
-   class UserForm{
-   +parent: Element
-   +model: User
-   +reactivity(): (void)
-   +eventsMap(): (EventMapObject)
-   +template(): string
-   +render(): (void)
-   +onSetNameClick():(void)
-   +onSetAgeClick():(void)
-   +onSaveClick():(void)
-   }
-   class EventMapObject {
-   <<Type>>
-   +key_of_string_and_function
-   }
-   UserForm *-- EventMapObject: Type Constraint
+   ApiSync *.. HasId: Type Constraint
 ```
 
 #### view-reusable:
 ```mermaid
    classDiagram
-   class UserForm{
+   class View~T extends Model, K~ {
+   <<abstract Class>>
    +parent: Element
    +model: User
-   +reactivity(): (void)
-   +eventsMap(): (EventMapObject)
-   +template(): string
-   +render(): (void)
-   +onSetNameClick():(void)
-   +onSetAgeClick():(void)
-   +onSaveClick():(void)
+   +reactivity(): void
+   +template()* string
+   +eventsMap()* EventMapObject
+   +bindEvents(fragment: DocumentFragment): void
+   +render(): void
+   }
+   View <|-- UserForm: Inheritance
+   class UserForm{
+   +template() string
+   +eventsMap() EventMapObject
+   +onSetNameClick() void
+   +onSetAgeClick() void
+   +onSaveClick() void
    }
    class EventMapObject {
    <<Type>>
    +key_of_string_and_function
    }
-   UserForm *-- EventMapObject: Type Constraint
+   UserForm *.. EventMapObject: Type Constraint
 ```
