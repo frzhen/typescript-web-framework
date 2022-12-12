@@ -167,9 +167,13 @@
    +fetch()
    }
    Collection <-- Eventing: Composition
-   Collection <-- User: as Generic Parameter
+   Collection <|.. User: as Generic Parameter
+   User o-- Collection: Aggregation
    class User {
+   <<extends Model>>
+   +attrs: UserProps
    +static_build(attrs:UserProps): (User)
+   +static_buildCollection()
    }
    class UserProps {
    <<interface>>
@@ -182,7 +186,7 @@
    <<Type>>
    +empty_callback_function()
    }
-   Model <-- User: Inheritance
+   Model <|-- User: Inheritance
    class Model{
    <<Generic T extends HasId>>
    -attributes: ModelAttributes
@@ -202,7 +206,7 @@
    +getAllAttributes():(T)
    }
    Model <-- ModelAttributes: Composition
-   ModelAttributes *-- Attributes: Association
+   ModelAttributes <.. Attributes: Association
    class Events{
    <<Interface>>
    +on(eventName: string, callback: Callback):(void)
@@ -210,13 +214,13 @@
    +triggerAll():(void)
    }
    Model <-- Events: Composition
-   Events *-- Eventing: Association
+   Events <.. Eventing: Association
    class EventList {
    <<Type>>
    +keys_of_string_and_list_of_callback_functions
    }
-   Events <|-- Callback: Type Constraint
-   Eventing <.. EventList: Type Constraint
+   Events *-- Callback: Type Constraint
+   Eventing *-- EventList: Type Constraint
    class Eventing {
    -event_dict: EventList
    -getEventMethods(eventName: string): (Callback[])
@@ -229,7 +233,7 @@
    +save(data: T): (AxiosPromise)
    }
    Model <-- Sync: Composition
-   Sync *-- ApiSync: Association
+   Sync <.. ApiSync: Association
    class Attributes{
    <<Generic T>>
    -data: T
@@ -247,7 +251,7 @@
    <<Type>>
    id?: number
    }
-   ApiSync <-- HasId: Type Constraint
+   ApiSync *-- HasId: Type Constraint
 ```
 
 
