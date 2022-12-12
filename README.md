@@ -205,12 +205,16 @@
    classDiagram
    class View~T extends Model, K~ {
    <<abstract Class>>
+   +regions: RegionObject
    +parent: Element
    +model: User
    +reactivity(): void
    +template()* string
+   +regionsMap(): RegionMapObject
    +eventsMap() EventMapObject
    +bindEvents(fragment: DocumentFragment): void
+   +mapRegions(fragment: DocumentFragment): void
+   +onRender(): void
    +render(): void
    }
    View <|-- UserForm: Inheritance
@@ -226,4 +230,26 @@
    +key_of_string_and_function
    }
    UserForm *.. EventMapObject: Type Constraint
+   class RegionObject {
+   <<Type>>
+   +key_of_string_and_Element
+   }
+   View *.. RegionObject: Type Constraint
+   class RegionMapObject {
+   <<Type>>
+   +key_of_strings_and_string
+   }
+   View *.. RegionMapObject: Type Constraint
+   class UserShow {
+   +template(): string
+   }
+   View <|-- UserShow: Inheritance
+   class UserEdit {
+   +template(): string
+   +regionsMap(): RegionMapObject
+   +onRender(): void
+   }
+   View <|-- UserEdit: Inheritance
+   UserShow <-- UserEdit: Association
+   UserForm <-- UserEdit: Association
 ```
