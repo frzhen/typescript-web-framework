@@ -9,20 +9,28 @@ import { User } from "../models/User";
 
 export class UserForm {
 
-  constructor(public parent: Element, public model: User) {}
+  constructor(public parent: Element, public model: User) {
+    this.reactivity()
+  }
 
+  reactivity(): void {
+    this.model.on('change', () => {
+    this.render();
+    });
+  }
   eventsMap(): EventMapObject {
     return {
-      'click:button': this.onButtonClick,
-      'mouseover:h1': this.onHeaderMouseOver
+      'click:.set-age': this.onSetAgeClick,
+      'click:#update-name': this.onUpdateNameClick
+
     };
   }
 
-  onHeaderMouseOver(): void {
-    console.log('H1 is hovered over');
+  onSetAgeClick = (): void => {
+    this.model.setRandomAge();
   }
-  onButtonClick():void {
-    console.log('Hi, there');
+  onUpdateNameClick(): void {
+    console.log('Hi, Update name');
   }
   template(): string {
     return `
@@ -41,10 +49,10 @@ export class UserForm {
              <input class="input" />
           </div>
           <div class="card-footer-item">
-            <button class="button is-primary">Update Name</button>
+            <button id="update-name" class=" button is-primary">Update Name</button>
           </div>
           <div class="card-footer-item">
-           <button class="button is-info">Random Age</button>
+           <button class="set-age button is-info">Set Random Age</button>
           </div>
         </div>
       </div>
@@ -61,6 +69,9 @@ export class UserForm {
     }
   }
   render(): void {
+    // Empty out page
+    this.parent.innerHTML = '';
+    // render or re-render the page
     const templateElement = document.createElement('template');
     templateElement.innerHTML = this.template();
     this.bindEvents(templateElement.content);
