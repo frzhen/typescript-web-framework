@@ -14,6 +14,10 @@ export type EventList = {[key: string]: Callback[]};
 
 export type EventMapObject = {[key: string]: () => void };
 
+export type RegionObject = {[key: string]: Element};
+
+export type RegionMapObject = {[key: string]: string};
+
 export interface HasId {
   id?: number;
 }

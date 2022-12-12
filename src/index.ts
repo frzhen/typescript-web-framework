@@ -3,19 +3,21 @@
  * @Date: 2022/12/8 23:12
  * @Email: fred.zhen@gmail.com
  */
-import { UserForm } from './views/UserForm';
+
 import { User } from "./models/User";
+import {UserEdit} from "./views/UserEdit";
 
 
 const user = User.build({ name: 'Name', age: 20})
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
-  const userForm = new UserForm(
+  const userEdit = new UserEdit(
     rootElement,
     user
   );
-  userForm.render();
+  userEdit.render();
+  console.log(userEdit);
 } else {
   throw new Error("The root element is not present!");
 }

@@ -209,7 +209,7 @@
    +model: User
    +reactivity(): void
    +template()* string
-   +eventsMap()* EventMapObject
+   +eventsMap() EventMapObject
    +bindEvents(fragment: DocumentFragment): void
    +render(): void
    }
