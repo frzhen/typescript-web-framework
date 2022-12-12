@@ -11,8 +11,17 @@ export class UserForm {
   template(): string {
     return `
       <div>
-        <h1>User Form</h1>
-        <input />
+        <h1 class="is-size-1 mb-4">User Form</h1>
+        <div class="columns">
+          <div class="column is-two-thirds">
+            <input class="input" />
+          </div>
+          <div class="column">
+            <button class="button is-primary">Click Me</button>
+          </div>
+        </div>
+        
+        
       </div>
     `;
   }
