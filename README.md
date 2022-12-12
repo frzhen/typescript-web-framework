@@ -2,7 +2,6 @@
 
 ### Execution:
 - run on browser: `npm run web`
-- run on terminal only: `npm run dev`
 ### Installation
 - run on browser: Parcel bundler
   - install parcel2 with npm at global level `npm install parcel -g`
@@ -16,22 +15,21 @@
     ```
     - run json server at a different terminal window at root directory:
       - `json-server -w db.json`
-  - Now you can check your project in browser
-- run on terminal: 
   - initialize npm project: `npm init`, and package.json created at root directory.
-  - initialize typescript compiler: `tsc --init`, tsconfig.json template created in root directory.
-  - modify the `rootDirs` and `outDir` in `tsconfig.json`:
-    - `rootDirs`: [",/src""]
-    - `outDir`: "./build"
   - <a name="dependencies"></a>install necessary dependencies:
-    - install node typescript support: `npm i --save-dev @types/node`
-    - install nodemon: `npm i --save-dev nodemon`
-    - install concurrently: `npm i --save-dev concurrently`
-    - install axios: `npm i --save-dev axios`
+      - install node typescript support: `npm i --save-dev @types/node`
+      - install concurrently: `npm i --save-dev concurrently`
+      - install axios: `npm i --save-dev axios`
   - install local backend server JSON server: `npm i --save-dev json-server`
   - default port is 3000, you can allocate a different port by using `-p <port_number>`
   - in browser, got to `http://localhost:3000` to check documentation
   - in browser, got to `http://localhost:3000/users` for resource
+##### Optional, and not recommended for Parcel2
+- initialize typescript compiler: `tsc --init`, tsconfig.json template created in root directory.
+- modify the `rootDirs` and `outDir` in `tsconfig.json`:
+  - `rootDirs`: [",/src""]
+  - `outDir`: "./build"
+
 #### Note:
 *Parcel bundler require `type="module"` added into the script tag at `index.html`*
 
@@ -158,8 +156,24 @@
 #### reusable-Inheritance
 ```mermaid
    classDiagram
+   class Collection{
+   <<Generic T, K>>
+   +models: T[]
+   +events: Eventing
+   +rootUrl: string
+   +deserialize: (json: K)
+   +on()
+   +trigger()
+   +fetch()
+   }
+   Collection <-- Eventing: Composition
+   Collection <|.. User: as Generic Parameter
+   User o-- Collection: Aggregation
    class User {
+   <<extends Model>>
+   +attrs: UserProps
    +static_build(attrs:UserProps): (User)
+   +static_buildCollection()
    }
    class UserProps {
    <<interface>>
@@ -172,7 +186,7 @@
    <<Type>>
    +empty_callback_function()
    }
-   Model <-- User: Inheritance
+   Model <|-- User: Inheritance
    class Model{
    <<Generic T extends HasId>>
    -attributes: ModelAttributes
@@ -192,7 +206,7 @@
    +getAllAttributes():(T)
    }
    Model <-- ModelAttributes: Composition
-   ModelAttributes *-- Attributes: Association
+   ModelAttributes <.. Attributes: Association
    class Events{
    <<Interface>>
    +on(eventName: string, callback: Callback):(void)
@@ -200,13 +214,13 @@
    +triggerAll():(void)
    }
    Model <-- Events: Composition
-   Events *-- Eventing: Association
+   Events <.. Eventing: Association
    class EventList {
    <<Type>>
    +keys_of_string_and_list_of_callback_functions
    }
-   Events <|-- Callback: Type Constraint
-   Eventing <.. EventList: Type Constraint
+   Events *-- Callback: Type Constraint
+   Eventing *-- EventList: Type Constraint
    class Eventing {
    -event_dict: EventList
    -getEventMethods(eventName: string): (Callback[])
@@ -219,7 +233,7 @@
    +save(data: T): (AxiosPromise)
    }
    Model <-- Sync: Composition
-   Sync *-- ApiSync: Association
+   Sync <.. ApiSync: Association
    class Attributes{
    <<Generic T>>
    -data: T
@@ -237,7 +251,7 @@
    <<Type>>
    id?: number
    }
-   ApiSync <-- HasId: Type Constraint
+   ApiSync *-- HasId: Type Constraint
 ```
 
 
