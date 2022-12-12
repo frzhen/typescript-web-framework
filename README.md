@@ -2,7 +2,6 @@
 
 ### Execution:
 - run on browser: `npm run web`
-- run on terminal only: `npm run dev`
 ### Installation
 - run on browser: Parcel bundler
   - install parcel2 with npm at global level `npm install parcel -g`
@@ -16,22 +15,21 @@
     ```
     - run json server at a different terminal window at root directory:
       - `json-server -w db.json`
-  - Now you can check your project in browser
-- run on terminal: 
   - initialize npm project: `npm init`, and package.json created at root directory.
-  - initialize typescript compiler: `tsc --init`, tsconfig.json template created in root directory.
-  - modify the `rootDirs` and `outDir` in `tsconfig.json`:
-    - `rootDirs`: [",/src""]
-    - `outDir`: "./build"
   - <a name="dependencies"></a>install necessary dependencies:
-    - install node typescript support: `npm i --save-dev @types/node`
-    - install nodemon: `npm i --save-dev nodemon`
-    - install concurrently: `npm i --save-dev concurrently`
-    - install axios: `npm i --save-dev axios`
+      - install node typescript support: `npm i --save-dev @types/node`
+      - install concurrently: `npm i --save-dev concurrently`
+      - install axios: `npm i --save-dev axios`
   - install local backend server JSON server: `npm i --save-dev json-server`
   - default port is 3000, you can allocate a different port by using `-p <port_number>`
   - in browser, got to `http://localhost:3000` to check documentation
   - in browser, got to `http://localhost:3000/users` for resource
+##### Optional, and not recommended for Parcel2
+- initialize typescript compiler: `tsc --init`, tsconfig.json template created in root directory.
+- modify the `rootDirs` and `outDir` in `tsconfig.json`:
+  - `rootDirs`: [",/src""]
+  - `outDir`: "./build"
+
 #### Note:
 *Parcel bundler require `type="module"` added into the script tag at `index.html`*
 
@@ -158,6 +156,18 @@
 #### reusable-Inheritance
 ```mermaid
    classDiagram
+   class Collection{
+   <<Generic T, K>>
+   +models: T[]
+   +events: Eventing
+   +rootUrl: string
+   +deserialize: (json: K)
+   +on()
+   +trigger()
+   +fetch()
+   }
+   Collection <-- Eventing: Composition
+   Collection <-- User: as Generic Parameter
    class User {
    +static_build(attrs:UserProps): (User)
    }
