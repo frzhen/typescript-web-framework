@@ -40,6 +40,10 @@ export abstract class View<T extends Model<K>, K> {
       }
     }
   }
+
+  onRender(): void {
+    // this is where you do view nesting
+  }
   render(): void {
     // Empty out page
     this.parent.innerHTML = '';
@@ -47,7 +51,10 @@ export abstract class View<T extends Model<K>, K> {
     const templateElement = document.createElement('template');
     templateElement.innerHTML = this.template();
     this.bindEvents(templateElement.content);
+    //map sub region of html element
     this.mapRegions(templateElement.content);
+    // add in sub html element
+    this.onRender();
     this.parent.append(templateElement.content);
   }
 

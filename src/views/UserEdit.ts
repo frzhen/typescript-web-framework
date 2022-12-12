@@ -3,9 +3,11 @@
  * @Date: 2022/12/12 14:36
  * @Email: fred.zhen@gmail.com
  */
-import {RegionMapObject, UserProps} from "../datatypes";
-import {View} from "./View";
-import {User} from "../models/User";
+import { RegionMapObject, UserProps } from "../datatypes";
+import { View } from "./View";
+import { User } from "../models/User";
+import {UserShow} from "./UserShow";
+import {UserForm} from "./UserForm";
 
 
 export class UserEdit extends View<User, UserProps> {
@@ -28,5 +30,10 @@ export class UserEdit extends View<User, UserProps> {
       userShow: '#user-detail',
       userForm: '#user-form'
     };
+  }
+
+  onRender() {
+    new UserShow(this.regions.userShow, this.model).render();
+    new UserForm(this.regions.userForm, this.model).render();
   }
 }
