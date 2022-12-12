@@ -1,8 +1,18 @@
+html {
+    background-color: #eee;
+}
 body {
     font-family: Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #eee;
+    background-color: #eee;
     margin-top: 60px;
 }
+.box {
+    background-color: aliceblue;
+}
+.card {
+    background-color: #fff;
+}
+
