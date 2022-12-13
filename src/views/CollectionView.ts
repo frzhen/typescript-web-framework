@@ -11,7 +11,7 @@ export abstract class CollectionView<T, K> {
 
   abstract renderItem(model: T, itemParent: Element):void;
 
-  render= ():void => {
+  render = ():void => {
     this.parent.innerHTML = '';
 
     const templateElement = document.createElement('template');

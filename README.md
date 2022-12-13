@@ -252,4 +252,16 @@
    View <|-- UserEdit: Inheritance
    UserShow <-- UserEdit: Association
    UserForm <-- UserEdit: Association
+   class CollectionView~T, K~{
+   +parent: Element
+   +collection: Collection[T,K]
+   +renderItem(model: T, itemParent: Element)* void
+   +render() void
+   }
+   CollectionView <-- Collection~T, K~: Composition
+   class UserList {
+   +renderItem() void
+   }
+   UserList <.. UserShow: Association
+   CollectionView~T, K~ <|-- UserList: Inheritance
 ```
