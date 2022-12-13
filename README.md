@@ -265,3 +265,8 @@
    UserList <.. UserShow: Association
    CollectionView~T, K~ <|-- UserList: Inheritance
 ```
+
+### References:
+- Model classes are very similar to: [Backbone.js](https://backbonejs.org/);
+- View classes are very similar to: [Marionette.js](https://marionettejs.com/)
+- Marionette.js sits on top of Backbone.js very nicely
