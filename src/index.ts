@@ -5,22 +5,40 @@
  */
 
 import { User } from "./models/User";
-import {UserEdit} from "./views/UserEdit";
+import { UserEdit } from "./views/UserEdit";
+import {rootUrl} from "./env";
+import {UserProps} from "./datatypes";
+import {Collection} from "./models/Collections";
+import {UserList} from "./views/UserList";
 
 
 const user = User.build({ name: 'Name', age: 20})
+const users = new Collection(rootUrl,
+  (json: UserProps) => {
+    return User.build(json);
+  })
 
-const rootElement = document.getElementById('root');
-if (rootElement) {
-  const userEdit = new UserEdit(
-    rootElement,
-    user
-  );
-  userEdit.render();
-  console.log(userEdit);
+user.on('save', () => {
+  users.fetch();
+});
+
+const controlPanelElement = document.getElementById('control-panel');
+if (controlPanelElement) {
+  new UserEdit(controlPanelElement, user).render();
 } else {
   throw new Error("The root element is not present!");
 }
+const userListElement = document.getElementById("user-list");
+if (userListElement) {
+  const userList = new UserList(userListElement, users);
+  users.on('change', () => {
+    userList.render();
+  });
+}
+
+users.fetch();
+
+
 
 
 

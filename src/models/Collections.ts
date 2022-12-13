@@ -21,14 +21,16 @@ export class Collection<T, K> {
   get trigger() {
     return this.events.trigger;
   }
-
-  fetch(): void {
+  fetch = (): void => {
+    this.models = [];
     axios.get(this.rootUrl)
-      .then((response:AxiosResponse)=>{
+      .then((response:AxiosResponse)=> {
         response.data.forEach((value: K) => {
           this.models.push(this.deserialize(value));
-        });
-        this.events.triggerAll();
+        })
+      })
+      .then(()=>{
+          this.events.trigger('change');
       });
   }
 }

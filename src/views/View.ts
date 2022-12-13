@@ -44,7 +44,7 @@ export abstract class View<T extends Model<K>, K> {
   onRender(): void {
     // this is where you do view nesting
   }
-  render(): void {
+  render = (): void => {
     // Empty out page
     this.parent.innerHTML = '';
     // render or re-render the page

@@ -20,7 +20,7 @@ export class Model<T extends HasId> {
 
   set(update: T): void {
     this.attributes.set(update);
-    this.events.triggerAll();
+    this.events.trigger('change');
   }
 
   on = this.events.on;
